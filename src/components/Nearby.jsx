@@ -5,7 +5,7 @@ function Nearby({ locations, onSelect, units, formatDistance }) {
     return (
       <div className="nearby">
         <h2>Nearby Locations</h2>
-        <p>No nearby locations found</p>
+        <p>No nearby locations found. It works only for US zip codes</p>
       </div>
     );
   }

@@ -32,6 +32,7 @@ function IPLookup({ onSearch }) {
         >
           {isLoading ? 'Searching...' : 'Search'}
         </button>
+   
       </form>
     </div>
   );

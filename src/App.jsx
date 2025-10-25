@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import './App.css'
 import IPLookup from './components/IPLookup';
 import Current from './components/Current';
@@ -12,7 +12,7 @@ import SearchHistory from "./components/Searchhistory";
 const WEATHER_API_KEY = import.meta.env.VITE_WEATHERAPI_KEY;
 const ZIPCODE_API_KEY = import.meta.env.VITE_ZIPCODESTACK_KEY;
 const WEATHER_BASE_URL = 'https://api.weatherapi.com/v1';
-const ZIPCODE_BASE_URL = 'https://api.zipcodestack.com/v1';
+const ZIPCODE_BASE_URL = 'https://app.zipcodebase.com/api/v1';
 
 // Unit conversion helpers (copied from src/utils/units.js)
 const cToF = (c) => (c * 9) / 5 + 32;
@@ -60,16 +60,25 @@ function App() {
   // Unit preferences (temp: 'C'|'F', distance: 'mi'|'km')
   const [units, setUnits] = useState({ temp: 'C', distance: 'mi' });
 
+  // Stable handler to receive unit changes from child components
+  // Use useCallback so the reference doesn't change on every render.
+  const handleUnitChange = useCallback((u) => {
+    setUnits(prev => ({ ...prev, ...u }));
+  }, []);
+
   // Function to handle search
   const handleSearch = async (query) => {
     try {
+      // Clear nearby locations at the start of each search
+      setNearbyLocations([]);
+
       const locationData = await weatherService.getIPLocation(query);
       const current = await weatherService.getCurrentWeather(query);
       const forecastData = await weatherService.getForecast(query);
       const astronomyData = await weatherService.getAstronomy(query);
       const marineData = await weatherService.getMarine(query);
 
-      // Get country code and nearby locations if we have a ZIP code
+      // Only get nearby locations if we have a ZIP code
       if (/^\d+$/.test(query)) {
         const countryCode = await countryService.getCountryCode(locationData.location.country);
         if (countryCode) {
@@ -171,7 +180,7 @@ function App() {
   return (
     <div className="app-container">
       <header className="app-header">
-        <h1>Weather & Location Dashboard</h1>
+        <h1>Weather & Location Dashboard <span>     <a href="https://www.weatherapi.com/" title="Free Weather API"><img src='//cdn.weatherapi.com/v4/images/weatherapi_logo.png' alt="Weather data by WeatherAPI.com" border="0"/></a></span></h1>
       </header>
 
       <div className="left-panel">
@@ -185,7 +194,7 @@ function App() {
 
       <div className="main-content">
         <IPLookup onSearch={handleSearch} />
-        <Summary data={summary} onUnitChange={(u) => setUnits(prev => ({...prev, ...u}))} />
+  <Summary data={summary} onUnitChange={handleUnitChange} />
 
         <div className="weather-info">
           <Current data={currentWeather} units={units} formatTemp={formatTemp} formatSpeed={formatSpeed} />
