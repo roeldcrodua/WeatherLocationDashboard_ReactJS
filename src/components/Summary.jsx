@@ -17,8 +17,8 @@ function Summary({ data, onUnitChange }) {
 
   const formatTemp = (valueC) => {
     const val = Number(valueC) || 0;
-    if (tempUnit === 'F') return `${cToF(val).toFixed(1)}°F`;
-    return `${val.toFixed(1)}°C`;
+    if (tempUnit === 'F') return `${Math.round(cToF(val))}°F`;
+    return `${Math.round(val)}°C`;
   };
 
   return (

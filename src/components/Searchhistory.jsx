@@ -20,10 +20,25 @@ function SearchHistory({ history, onSelect }) {
             className="history-item"
             onClick={() => onSelect(item.query)}
           >
-            <p>{item.query}</p>
-            <p className="timestamp">
-              {new Date(item.timestamp).toLocaleTimeString()}
-            </p>
+            <div className="history-content">
+              {item.current?.icon && (
+                <img 
+                  src={item.current.icon} 
+                  alt={item.current.condition}
+                  className="history-weather-icon"
+                />
+              )}
+              <div className="history-text">
+                <p>{item.query} 
+                  {item.current?.condition && (
+                    <span className="condition-text"> - {item.current.condition} ({item.current.temp})</span>
+                  )}
+                </p>
+                <p className="timestamp">
+                  {new Date(item.timestamp).toLocaleTimeString()}
+                </p>
+              </div>
+            </div>
           </div>
         ))}
       </div>

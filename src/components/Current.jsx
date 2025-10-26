@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Current({ data, units, formatTemp, formatSpeed }) {
+function Current({ data, units, formatTemp, formatSpeed, getWeatherIcon }) {
   if (!data) return (
     <div className="current-weather">
       <h2>Current Weather</h2>
@@ -16,7 +16,7 @@ function Current({ data, units, formatTemp, formatSpeed }) {
       <div className="weather-details">
         <div className="weather-main">
           <img 
-            src={current.condition.icon} 
+            src={getWeatherIcon(current.condition.code, current.is_day)} 
             alt={current.condition.text}
             className="weather-icon"
           />

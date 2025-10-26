@@ -9,7 +9,7 @@ function Nearby({ locations, onSelect, units, formatDistance }) {
       </div>
     );
   }
-
+  console.log("Nearby locations:", locations);
   return (
     <div className="nearby">
       <h2>Nearby Locations</h2>
@@ -20,7 +20,7 @@ function Nearby({ locations, onSelect, units, formatDistance }) {
             className="location-item"
             onClick={() => onSelect(location.code)}
           >
-            <p>{location.city}, {location.state}</p>
+            <p>{location.code} - {location.city}, {location.state}</p>
             <p className="distance">{formatDistance(location.distance, units)} away</p>
           </div>
         ))}
