@@ -16,7 +16,11 @@
   max-width: 100%;
   margin: 0;
   padding: 0;
-  background: var(--primary-bg);
+  /* Background image with a subtle gradient overlay */
+  background: linear-gradient(135deg, rgba(30, 60, 114, 0.55) 0%, rgba(42, 82, 152, 0.55) 100%), url('./assets/background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   background-attachment: fixed;
   color: var(--text-primary);
   overflow-y: auto;
