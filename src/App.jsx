@@ -346,16 +346,11 @@ function App() {
 
         <div className="visibility-controls">
           <div className="controls-row">
-            <label><input type="checkbox" checked={visible.search} onChange={() => toggleVisible('search')} /> Search</label>
-            <label><input type="checkbox" checked={visible.summary} onChange={() => toggleVisible('summary')} /> Summary</label>
+            <span className="controls-title">Filter Option</span>
             <label><input type="checkbox" checked={visible.current} onChange={() => toggleVisible('current')} /> Current</label>
             <label><input type="checkbox" checked={visible.forecast} onChange={() => toggleVisible('forecast')} /> Forecast</label>
-          </div>
-          <div className="controls-row">
             <label><input type="checkbox" checked={visible.astronomy} onChange={() => toggleVisible('astronomy')} /> Astronomy</label>
             <label><input type="checkbox" checked={visible.marine} onChange={() => toggleVisible('marine')} /> Marine</label>
-            <label><input type="checkbox" checked={visible.nearby} onChange={() => toggleVisible('nearby')} /> Nearby</label>
-            <label><input type="checkbox" checked={visible.history} onChange={() => toggleVisible('history')} /> History</label>
           </div>
         </div>
 
@@ -367,7 +362,7 @@ function App() {
 
         <div className="weather-info">
           {visible.current && (
-            <Current data={currentWeather} units={units} formatTemp={formatTemp} formatSpeed={formatSpeed} getWeatherIcon={getIconPath} />
+            <Current data={currentWeather} units={units} formatTemp={formatTemp} formatSpeed={formatSpeed} formatDistance={formatDistance} getWeatherIcon={getIconPath} />
           )}
           {visible.forecast && (
             <Forecast data={forecast} units={units} formatTemp={formatTemp} formatSpeed={formatSpeed} mmToInches={mmToInches} getWeatherIcon={getIconPath} />

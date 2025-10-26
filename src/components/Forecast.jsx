@@ -16,49 +16,47 @@ function Forecast({ data, units, formatTemp, formatSpeed, mmToInches, getWeather
   return (
     <div className="forecast">
       <h2>Today's Forecast for {location.name}</h2>
-      <div className="forecast-details">
-        <div className="forecast-main">
-          <img 
-            src={getWeatherIcon(day.condition.code, 1)} 
-            alt={day.condition.text}
-            className="weather-icon"
-          />
-          <p className="condition">{day.condition.text}</p>
-        </div>
-        <div className="temperature-range">
-          <div className="temp-item">
-            <span>Maximum</span>
-            <span className="temp">{formatTemp(day.maxtemp_c, units?.temp)}</span>
+      <div className="forecast-hero">
+        <div className="forecast-left">
+          <div className="temp-line">
+            <span className="temp-value">{parseInt(formatTemp(day.avgtemp_c, units?.temp))}</span>
+            <span className="temp-unit">°{units?.temp || 'C'}</span>
           </div>
-          <div className="temp-item">
-            <span>Minimum</span>
-            <span className="temp">{formatTemp(day.mintemp_c, units?.temp)}</span>
+          <div className="condition-line">
+            <img
+              src={getWeatherIcon(day.condition.code, 1)}
+              alt={day.condition.text}
+              className="forecast-icon-large"
+            />
+            <span className="condition-text">{day.condition.text}</span>
           </div>
-          <div className="temp-item">
-            <span>Average</span>
-            <span className="temp">{formatTemp(day.avgtemp_c, units?.temp)}</span>
+          <div className="sub-line">
+            <span>High {formatTemp(day.maxtemp_c, units?.temp)}</span>
+            <span className="dot">•</span>
+            <span>Low {formatTemp(day.mintemp_c, units?.temp)}</span>
           </div>
         </div>
-        <div className="forecast-info-grid">
-          <div className="info-item">
-            <span>Max Wind</span>
-            <span>{formatSpeed(day.maxwind_kph, units)}</span>
+
+        <div className="forecast-right">
+          <div className="metric">
+            <span className="label">Max Wind</span>
+            <span className="value">{formatSpeed(day.maxwind_kph, units)}</span>
           </div>
-          <div className="info-item">
-            <span>Total Precipitation</span>
-            <span>{units?.distance === 'mi' ? `${mmToInches(day.totalprecip_mm).toFixed(2)} in` : `${day.totalprecip_mm} mm`}</span>
+          <div className="metric">
+            <span className="label">Total Precipitation</span>
+            <span className="value">{units?.distance === 'mi' ? `${mmToInches(day.totalprecip_mm).toFixed(2)} in` : `${day.totalprecip_mm} mm`}</span>
           </div>
-          <div className="info-item">
-            <span>Average Humidity</span>
-            <span>{day.avghumidity}%</span>
+          <div className="metric">
+            <span className="label">Average Humidity</span>
+            <span className="value">{day.avghumidity}%</span>
           </div>
-          <div className="info-item">
-            <span>UV Index</span>
-            <span>{day.uv}</span>
+          <div className="metric">
+            <span className="label">UV Index</span>
+            <span className="value">{day.uv}</span>
           </div>
-          <div className="info-item">
-            <span>Rain Chance</span>
-            <span>{day.daily_chance_of_rain}%</span>
+          <div className="metric">
+            <span className="label">Rain Chance</span>
+            <span className="value">{day.daily_chance_of_rain}%</span>
           </div>
         </div>
       </div>

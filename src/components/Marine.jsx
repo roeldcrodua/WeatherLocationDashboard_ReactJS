@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 function Marine({ data }) {
   if (!data) return (
@@ -9,36 +9,48 @@ function Marine({ data }) {
   );
 
   const { forecast, location } = data;
-  const tides = forecast.forecastday[0].day.tides[0].tide;
+  const tides = forecast?.forecastday?.[0]?.day?.tides?.[0]?.tide || [];
+  const nextTide = tides[0];
 
   return (
     <div className="marine">
       <h2>Marine Conditions for {location.name}</h2>
-      <div className="tides-info">
-        <h3>Tides</h3>
-        <div className="tides-grid">
+      <div className="marine-hero">
+        <div className="marine-left">
+          <div className="condition-line">
+            <span className="marine-icon-large" role="img" aria-label="waves">🌊</span>
+            <span className="condition-text">Tides</span>
+          </div>
+          {nextTide && (
+            <div className="sub-line">
+              <span>Next {nextTide.tide_type} tide</span>
+              <span className="dot">•</span>
+              <span>{new Date(nextTide.tide_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+              <span className="dot">•</span>
+              <span>{nextTide.tide_height_mt} m</span>
+            </div>
+          )}
+        </div>
+
+        <div className="marine-right">
           {tides.map((tide, index) => (
-            <div key={index} className="tide-item">
-              <div className="tide-time">
-                <span className="label">Time:</span>
-                <span>{new Date(tide.tide_time).toLocaleTimeString()}</span>
-              </div>
-              <div className="tide-height">
-                <span className="label">Height:</span>
-                <span>{tide.tide_height_mt} m</span>
-              </div>
-              <div className="tide-type">
-                <span className={`tide-badge ${tide.tide_type.toLowerCase()}`}>
-                  {tide.tide_type}
-                </span>
-              </div>
+            <div key={index} className="metric">
+              <span className="label">{tide.tide_type} tide</span>
+              <span className="value">
+                {new Date(tide.tide_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} • {tide.tide_height_mt} m
+              </span>
             </div>
           ))}
+          {tides.length === 0 && (
+            <div className="metric">
+              <span className="label">Tide data</span>
+              <span className="value">Unavailable</span>
+            </div>
+          )}
         </div>
       </div>
     </div>
   );
 }
-
 
 export default Marine;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 function Astronomy({ data }) {
   if (!data) return (
@@ -11,51 +11,50 @@ function Astronomy({ data }) {
   const { astronomy, location } = data;
   const { astro } = astronomy;
 
+  const isDay = astro.is_sun_up === 1 || astro.is_sun_up === true;
+  const headline = isDay ? 'Daytime' : 'Nighttime';
+  const iconEmoji = isDay ? '☀️' : '🌙';
+
   return (
     <div className="astronomy">
       <h2>Astronomy for {location.name}</h2>
-      <div className="astronomy-details">
-        <div className="sun-info">
-          <h3>Sun</h3>
-          <div className="info-grid">
-            <div className="info-item">
-              <span>Sunrise</span>
-              <span>{astro.sunrise}</span>
-            </div>
-            <div className="info-item">
-              <span>Sunset</span>
-              <span>{astro.sunset}</span>
-            </div>
-            <div className="info-item">
-              <span>Is Sun Up</span>
-              <span>{astro.is_sun_up ? 'Yes' : 'No'}</span>
-            </div>
+      <div className="astronomy-hero">
+        <div className="astronomy-left">
+          <div className="condition-line">
+            <span className="astro-icon-large" role="img" aria-label={headline}>{iconEmoji}</span>
+            <span className="condition-text">{headline}</span>
+          </div>
+          <div className="sub-line">
+            <span>Sunrise {astro.sunrise}</span>
+            <span className="dot">•</span>
+            <span>Sunset {astro.sunset}</span>
           </div>
         </div>
 
-        <div className="moon-info">
-          <h3>Moon</h3>
-          <div className="info-grid">
-            <div className="info-item">
-              <span>Moonrise</span>
-              <span>{astro.moonrise}</span>
-            </div>
-            <div className="info-item">
-              <span>Moonset</span>
-              <span>{astro.moonset}</span>
-            </div>
-            <div className="info-item">
-              <span>Moon Phase</span>
-              <span>{astro.moon_phase}</span>
-            </div>
-            <div className="info-item">
-              <span>Illumination</span>
-              <span>{astro.moon_illumination}%</span>
-            </div>
-            <div className="info-item">
-              <span>Is Moon Up</span>
-              <span>{astro.is_moon_up ? 'Yes' : 'No'}</span>
-            </div>
+        <div className="astronomy-right">
+          <div className="metric">
+            <span className="label">Moonrise</span>
+            <span className="value">{astro.moonrise}</span>
+          </div>
+          <div className="metric">
+            <span className="label">Moonset</span>
+            <span className="value">{astro.moonset}</span>
+          </div>
+          <div className="metric">
+            <span className="label">Moon Phase</span>
+            <span className="value">{astro.moon_phase}</span>
+          </div>
+          <div className="metric">
+            <span className="label">Illumination</span>
+            <span className="value">{astro.moon_illumination}%</span>
+          </div>
+          <div className="metric">
+            <span className="label">Is Sun Up</span>
+            <span className="value">{isDay ? 'Yes' : 'No'}</span>
+          </div>
+          <div className="metric">
+            <span className="label">Is Moon Up</span>
+            <span className="value">{astro.is_moon_up ? 'Yes' : 'No'}</span>
           </div>
         </div>
       </div>
