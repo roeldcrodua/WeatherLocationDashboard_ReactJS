@@ -127,7 +127,7 @@ function App() {
     avgForecast: 0
   });
   // Unit preferences (temp: 'C'|'F', distance: 'mi'|'km')
-  const [units, setUnits] = useState({ temp: 'C', distance: 'mi' });
+  const [units, setUnits] = useState({ temp: 'F', distance: 'mi' });
   // Radius for nearby location searches
   const [searchRadius, setSearchRadius] = useState(10);
   // Store the last ZIP code query for radius changes
