@@ -10,6 +10,28 @@ function Current({ data, units, formatTemp, formatSpeed, formatDistance, getWeat
 
   const { current, location } = data;
 
+  // Format the last updated time to a readable format
+  const formatLastUpdated = (dateTimeString) => {
+    try {
+      const date = new Date(dateTimeString);
+      
+      // Format date as MM/DD/YYYY
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      const year = date.getFullYear();
+      
+      // Format time as 12-hour with am/pm
+      let hours = date.getHours();
+      const ampm = hours >= 12 ? 'pm' : 'am';
+      hours = hours % 12;
+      hours = hours ? hours : 12; // 0 should be 12
+      
+      return `${hours}${ampm} ${month}/${day}/${year}`;
+    } catch (error) {
+      return dateTimeString; // Fallback to original if parsing fails
+    }
+  };
+
   // Build pieces for display
   const tempDisplay = formatTemp(current.temp_c, units?.temp);
   const feelsLikeDisplay = formatTemp(current.feelslike_c, units?.temp);
@@ -22,7 +44,7 @@ function Current({ data, units, formatTemp, formatSpeed, formatDistance, getWeat
 
   return (
     <div className="current-weather">
-      <h2>Current Weather</h2>
+      <h2>Current Weather  for {location.name}</h2>
       <div className="current-hero">
         <div className="current-left">
           <div className="temp-line">
@@ -40,7 +62,10 @@ function Current({ data, units, formatTemp, formatSpeed, formatDistance, getWeat
           <div className="sub-line">
             <span className="location-name">{location.name}{location.region ? `, ${location.region}` : ''}</span>
             <span className="dot">•</span>
-            <span className="updated">Updated {current.last_updated}</span>
+            <span className="updated">
+              Update as of<br/>
+              {formatLastUpdated(current.last_updated)}
+            </span>
           </div>
         </div>
 

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 function Forecast({ data, units, formatTemp, formatSpeed, mmToInches, getWeatherIcon }) {
+  const [selectedHour, setSelectedHour] = useState(null);
   if (!data) return (
     <div className="forecast">
       <h2>Today's Forecast</h2>
@@ -10,8 +11,8 @@ function Forecast({ data, units, formatTemp, formatSpeed, mmToInches, getWeather
 
   const { forecast, location } = data;
   const day = forecast.forecastday[0].day;
-  // Only show every 3 hours (0, 3, 6, ..., 21)
-  const hourly = forecast.forecastday[0].hour.filter((h, idx) => idx % 3 === 0);
+  // Show all hours (1-hour intervals)
+  const hourly = forecast.forecastday[0].hour;
 
   return (
     <div className="forecast">
@@ -66,7 +67,7 @@ function Forecast({ data, units, formatTemp, formatSpeed, mmToInches, getWeather
         <h3>Hourly Forecast</h3>
         <div className="hourly-list">
           {hourly.map((hour) => (
-            <div key={hour.time_epoch} className="hour-item">
+            <div key={hour.time_epoch} className="hour-item" onClick={() => setSelectedHour(hour)}>
               <span className="hour-time">{new Date(hour.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
               <img src={getWeatherIcon(hour.condition.code, hour.is_day)} alt={hour.condition.text} className="hour-icon" />
               <span className="hour-temp">{formatTemp(hour.temp_c, units?.temp)}</span>
@@ -75,6 +76,75 @@ function Forecast({ data, units, formatTemp, formatSpeed, mmToInches, getWeather
           ))}
         </div>
       </div>
+
+      {/* Detailed Hour Modal */}
+      {selectedHour && (
+        <div className="hour-modal-overlay" onClick={() => setSelectedHour(null)}>
+          <div className="hour-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="hour-modal-header">
+              <h3>{new Date(selectedHour.time).toLocaleTimeString([], { 
+                hour: '2-digit', 
+                minute: '2-digit',
+                hour12: true 
+              })}</h3>
+              <button className="close-btn" onClick={() => setSelectedHour(null)}>×</button>
+            </div>
+            <div className="hour-modal-content">
+              <div className="hour-modal-main">
+                <div className="hour-modal-temp">
+                  <span className="temp-value">{parseInt(formatTemp(selectedHour.temp_c, units?.temp))}</span>
+                  <span className="temp-unit">°{units?.temp || 'C'}</span>
+                </div>
+                <div className="hour-modal-condition">
+                  <img
+                    src={getWeatherIcon(selectedHour.condition.code, selectedHour.is_day)}
+                    alt={selectedHour.condition.text}
+                    className="hour-modal-icon"
+                  />
+                  <span className="condition-text">{selectedHour.condition.text}</span>
+                </div>
+              </div>
+              
+              <div className="hour-modal-details">
+                <div className="detail-grid">
+                  <div className="detail-item">
+                    <span className="detail-label">Feels Like</span>
+                    <span className="detail-value">{formatTemp(selectedHour.feelslike_c, units?.temp)}</span>
+                  </div>
+                  <div className="detail-item">
+                    <span className="detail-label">Wind</span>
+                    <span className="detail-value">{formatSpeed(selectedHour.wind_kph, units)} {selectedHour.wind_degree}° {selectedHour.wind_dir}</span>
+                  </div>
+                  <div className="detail-item">
+                    <span className="detail-label">Wind Gust</span>
+                    <span className="detail-value">{formatSpeed(selectedHour.gust_kph, units)}</span>
+                  </div>
+                  <div className="detail-item">
+                    <span className="detail-label">Precipitation</span>
+                    <span className="detail-value">{units?.distance === 'mi' ? `${mmToInches(selectedHour.precip_mm).toFixed(2)} in` : `${selectedHour.precip_mm} mm`}</span>
+                  </div>
+                  <div className="detail-item">
+                    <span className="detail-label">Humidity</span>
+                    <span className="detail-value">{selectedHour.humidity}%</span>
+                  </div>
+                  <div className="detail-item">
+                    <span className="detail-label">Cloud Cover</span>
+                    <span className="detail-value">{selectedHour.cloud}%</span>
+                  </div>
+                  <div className="detail-item">
+                    <span className="detail-label">Heat Index</span>
+                    <span className="detail-value">{formatTemp(selectedHour.heatindex_c, units?.temp)}</span>
+                  </div>
+                  <div className="detail-item">
+                    <span className="detail-label">UV Index</span>
+                    <span className="detail-value">{selectedHour.uv}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

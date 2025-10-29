@@ -128,8 +128,14 @@ function App() {
   });
   // Unit preferences (temp: 'C'|'F', distance: 'mi'|'km')
   const [units, setUnits] = useState({ temp: 'C', distance: 'mi' });
+  // Radius for nearby location searches
+  const [searchRadius, setSearchRadius] = useState(10);
+  // Store the last ZIP code query for radius changes
+  const [lastZipQuery, setLastZipQuery] = useState(null);
   // Weather conditions mapping
   const [weatherConditionsMapping, setWeatherConditionsMapping] = useState(null);
+  // Screen size state for responsive behavior
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   // Component visibility controls
   const [visible, setVisible] = useState({
     search: true,
@@ -154,6 +160,36 @@ function App() {
     };
     loadWeatherConditions();
   }, []);
+
+  // Screen size detection for responsive behavior
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Handle radius changes - refresh nearby locations if we have a ZIP code
+  useEffect(() => {
+    const refreshNearbyLocations = async () => {
+      if (lastZipQuery && /^\d+$/.test(lastZipQuery)) {
+        try {
+          const locationData = await weatherService.getIPLocation(lastZipQuery);
+          const countryCode = await countryService.getCountryCode(locationData.location.country);
+          if (countryCode) {
+            const nearby = await nearbyService.getNearbyLocations(lastZipQuery, countryCode, searchRadius, units.distance);
+            setNearbyLocations(nearby.results || []);
+          }
+        } catch (error) {
+          console.error('Error refreshing nearby locations:', error);
+        }
+      }
+    };
+
+    refreshNearbyLocations();
+  }, [searchRadius, units.distance]); // Refresh when radius or distance unit changes
 
   // Stable handler to receive unit changes from child components
   // Use useCallback so the reference doesn't change on every render.
@@ -211,12 +247,17 @@ function App() {
 
       // Only get nearby locations if we have a ZIP code
       if (/^\d+$/.test(query)) {
+        setLastZipQuery(query); // Store for radius changes
         const countryCode = await countryService.getCountryCode(locationData.location.country);
         if (countryCode) {
           // pass selected distance unit to nearby service
-          const nearby = await nearbyService.getNearbyLocations(query, countryCode, 10, units.distance);
+          const nearby = await nearbyService.getNearbyLocations(query, countryCode, searchRadius, units.distance);
           setNearbyLocations(nearby.results || []);
         }
+      } else {
+        // Clear nearby locations and last ZIP query for non-ZIP searches
+        setNearbyLocations([]);
+        setLastZipQuery(null);
       }
 
       // Update states
@@ -337,6 +378,8 @@ function App() {
             onSelect={handleSearch}
             units={units}
             formatDistance={formatDistance}
+            searchRadius={searchRadius}
+            onRadiusChange={setSearchRadius}
           />
         </div>
       )}
@@ -381,6 +424,28 @@ function App() {
           <SearchHistory history={searchHistory} onSelect={handleSearch} />
         </div>
       )}
+
+      <div className="bottom-panel">
+        {/* Show Nearby component in bottom panel only when left panel is hidden (screen width <= 1400px) */}
+        {visible.nearby && screenWidth <= 1400 && (
+          <div className="bottom-nearby">
+            <Nearby
+              locations={nearbyLocations}
+              onSelect={handleSearch}
+              units={units}
+              formatDistance={formatDistance}
+              searchRadius={searchRadius}
+              onRadiusChange={setSearchRadius}
+            />
+          </div>
+        )}
+        {/* Show Search History component in bottom panel only when right panel is hidden (screen width <= 900px) */}
+        {visible.history && screenWidth <= 900 && (
+          <div className="bottom-history">
+            <SearchHistory history={searchHistory} onSelect={handleSearch} />
+          </div>
+        )}
+      </div>
     </div>
   );
 }
