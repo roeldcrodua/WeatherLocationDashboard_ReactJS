@@ -284,7 +284,7 @@ function App() {
       // Update summary statistics
       setSummary(prev => ({
         avgTemperature: current.current.temp_c,
-        searchCount: prev.searchCount + 1,
+        searchCount: isInitialLoad ? prev.searchCount : prev.searchCount + 1,
         avgForecast: forecastData.forecast.forecastday[0].day.avgtemp_c
       }));
 
