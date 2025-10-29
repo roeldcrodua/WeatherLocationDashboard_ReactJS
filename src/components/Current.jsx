@@ -49,7 +49,7 @@ function Current({ data, units, formatTemp, formatSpeed, formatDistance, getWeat
         <div className="current-left">
           <div className="temp-line">
             <span className="temp-value">{parseInt(tempDisplay)}</span>
-            <span className="temp-unit">°{units?.temp || 'C'}</span>
+            <span className="temp-unit">°{units?.temp || 'F'}</span>
           </div>
           <div className="condition-line">
             <img

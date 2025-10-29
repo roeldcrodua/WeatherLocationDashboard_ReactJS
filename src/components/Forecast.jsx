@@ -21,7 +21,7 @@ function Forecast({ data, units, formatTemp, formatSpeed, mmToInches, getWeather
         <div className="forecast-left">
           <div className="temp-line">
             <span className="temp-value">{parseInt(formatTemp(day.avgtemp_c, units?.temp))}</span>
-            <span className="temp-unit">°{units?.temp || 'C'}</span>
+            <span className="temp-unit">°{units?.temp || 'F'}</span>
           </div>
           <div className="condition-line">
             <img
@@ -93,7 +93,7 @@ function Forecast({ data, units, formatTemp, formatSpeed, mmToInches, getWeather
               <div className="hour-modal-main">
                 <div className="hour-modal-temp">
                   <span className="temp-value">{parseInt(formatTemp(selectedHour.temp_c, units?.temp))}</span>
-                  <span className="temp-unit">°{units?.temp || 'C'}</span>
+                  <span className="temp-unit">°{units?.temp || 'F'}</span>
                 </div>
                 <div className="hour-modal-condition">
                   <img

@@ -4,7 +4,7 @@ function Summary({ data, onUnitChange }) {
   const { avgTemperature = 0, searchCount = 0, avgForecast = 0 } = data || {};
 
   // Local unit state: temperature unit and distance unit
-  const [tempUnit, setTempUnit] = useState('C'); // 'C' or 'F'
+  const [tempUnit, setTempUnit] = useState('F'); // 'C' or 'F'
   const [distUnit, setDistUnit] = useState('mi'); // 'mi' or 'km'
 
   useEffect(() => {
