@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { formatTemp as formatTemperature } from '../App';
 
-function Summary({ data, onUnitChange }) {
+function Summary({ data, onUnitChange, location }) {
   const { avgTemperature = 0, searchCount = 0, avgForecast = 0 } = data || {};
 
   // Local unit state: temperature unit and distance unit
@@ -13,27 +14,24 @@ function Summary({ data, onUnitChange }) {
     }
   }, [tempUnit, distUnit, onUnitChange]);
 
-  const cToF = (c) => (c * 9) / 5 + 32;
-
   const formatTemp = (valueC) => {
     const val = Number(valueC) || 0;
-    if (tempUnit === 'F') return `${Math.round(cToF(val))}°F`;
-    return `${Math.round(val)}°C`;
+    return formatTemperature(val, tempUnit);
   };
 
   return (
     <div className="summary">
-      <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-        <h2>Weather Summary</h2>
+      <div className="summary-header">
+        <h2>Weather Summary{location ? ` - ${location}` : ''}</h2>
 
-        <div className="summary-filters" style={{display: 'flex', gap: '0.5rem', alignItems: 'center'}}>
-          <label htmlFor="temp-select" style={{fontSize: '0.9rem'}}>Temp:</label>
+        <div className="summary-filters">
+          <label htmlFor="temp-select">Temp:</label>
           <select id="temp-select" aria-label="Temp:" value={tempUnit} onChange={(e) => setTempUnit(e.target.value)}>
             <option value="C">Celsius (°C)</option>
             <option value="F">Fahrenheit (°F)</option>
           </select>
 
-          <label htmlFor="dist-select" style={{fontSize: '0.9rem'}}>Distance:</label>
+          <label htmlFor="dist-select">Distance:</label>
           <select id="dist-select" aria-label="Distance:" value={distUnit} onChange={(e) => setDistUnit(e.target.value)}>
             <option value="mi">Miles (mi)</option>
             <option value="km">Kilometers (km)</option>
