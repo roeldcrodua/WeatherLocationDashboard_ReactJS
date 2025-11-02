@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { WEATHER_API_KEY, WEATHER_BASE_URL } from '../App';
 
-function WeatherCharts({ locations, units }) {
+function WeatherCharts({ locations, units, visible }) {
   const [hourlyData, setHourlyData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   
@@ -86,6 +86,7 @@ function WeatherCharts({ locations, units }) {
   return (
     <div className="charts-container">
       {/* Chart 1: Hourly Temperature Forecast */}
+      {visible.temperature && (
       <div className="weather-card chart-card">
         <h2><i className="fas fa-temperature-high"></i> Hourly Temperature Forecast - {locations[0].name}</h2>
         <p className="chart-description">
@@ -133,8 +134,10 @@ function WeatherCharts({ locations, units }) {
           </LineChart>
         </ResponsiveContainer>
       </div>
+      )}
 
       {/* Chart 2: Hourly Humidity Forecast */}
+      {visible.humidity && (
       <div className="weather-card chart-card">
         <h2><i className="fas fa-droplet"></i> Hourly Humidity Forecast - {locations[0].name}</h2>
         <p className="chart-description">
@@ -172,8 +175,10 @@ function WeatherCharts({ locations, units }) {
           </BarChart>
         </ResponsiveContainer>
       </div>
+      )}
 
       {/* Chart 3: Hourly Wind Speed & Rain Chance */}
+      {visible.wind && (
       <div className="weather-card chart-card">
         <h2><i className="fas fa-wind"></i> Hourly Wind Speed & Rain Probability - {locations[0].name}</h2>
         <p className="chart-description">
@@ -237,6 +242,7 @@ function WeatherCharts({ locations, units }) {
           </LineChart>
         </ResponsiveContainer>
       </div>
+      )}
     </div>
   );
 }
