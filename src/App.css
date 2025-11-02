@@ -8,6 +8,14 @@
   --accent-color: #ff8c00;
   --hover-color: #ffa500;
   --shadow-color: rgba(0, 0, 0, 0.2);
+  
+  /* Chart colors */
+  --chart-color-1: #0088FE;
+  --chart-color-2: #00C49F;
+  --chart-color-3: #FFBB28;
+  --chart-color-4: #FF8042;
+  --chart-color-5: #8884D8;
+  --chart-color-6: #82CA9D;
 }
 
 #root {
