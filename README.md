@@ -1,13 +1,17 @@
-# Web Development Project 5 - Weather & Location Dashboard
+# Web Development Project 5 & 6 - Weather & Location Dashboard
 
 Submitted by:  Roel Crodua
 
 This web app: 
+
 This project is a Weather and Location Dashboard that shows key weather details using data from a public API. It gives users an easy view of current conditions, allows searching by location, and displays results that can be filtered. The app uses React features like useEffect, map(), and filter() to fetch and show live data, respond to user input, and make weather information simple and engaging to explore.
 
-Time spent: 20 hours spent in total
+In this next part, data visualizations and detailed views are added, allowing users to click on a location to see more information. The app uses React Router for navigation, dynamic links, and parameters, making the weather data more interactive and informative.
 
-## Required Features
+Time spent: 25 hours spent in total
+
+## PART 1
+### Required Features
 
 The following **required** functionality is completed:
 
@@ -26,6 +30,7 @@ The following **required** functionality is completed:
   - The filter **correctly** filters items in the list, only displaying items matching the filter attribute in the dashboard
   - The dashboard list dynamically updates as the user adjusts the filter
 
+### Optional Features
 The following **optional** features are implemented:
 
 - [x] Multiple filters can be applied simultaneously
@@ -33,9 +38,40 @@ The following **optional** features are implemented:
   - e.g., as a text input, a dropdown or radio selection, and/or a slider
 - [x] The user can enter specific bounds for filter values
 
+### Additional Features
 The following **additional** features are implemented:
 
 * [x] Make the page responsive.
+
+
+## PART 2
+### Required Features
+
+The following **required** functionality is completed:
+
+- [x] **Clicking on an item in the list view displays more details about it**
+  - Clicking on an item in the dashboard list navigates to a detail view for that item
+  - Detail view includes extra information about the item not included in the dashboard view
+  - The same sidebar is displayed in detail view as in dashboard view
+  - *To ensure an accurate grade, your sidebar **must** be viewable when showing the details view in your recording.*
+- [x] **Each detail view of an item has a direct, unique URL link to that item’s detail view page**
+  -  *To ensure an accurate grade, the URL/address bar of your web browser **must** be viewable in your recording.*
+- [x] **The app includes at least two unique charts developed using the fetched data that tell an interesting story**
+  - At least two charts should be incorporated into the dashboard view of the site
+  - Each chart should describe a different aspect of the dataset
+
+### Optional Features
+The following **optional** features are implemented:
+
+- [x] The site’s customized dashboard contains more content that explains what is interesting about the data 
+  - e.g., an additional description, graph annotation, suggestion for which filters to use, or an additional page that explains more about the data
+- [x] The site allows users to toggle between different data visualizations
+  - User should be able to use some mechanism to toggle between displaying and hiding visualizations 
+
+### Additional Features
+The following **additional** features are implemented:
+
+* [ ] Deploy through github pages
 
 ## Video Walkthrough
 

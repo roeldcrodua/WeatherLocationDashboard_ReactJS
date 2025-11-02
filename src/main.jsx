@@ -9,7 +9,7 @@ import DetailView from './routes/DetailView'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/WeatherLocationDashboard_ReactJS">
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Dashboard />} />
