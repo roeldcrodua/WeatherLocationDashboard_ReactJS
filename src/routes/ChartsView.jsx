@@ -36,6 +36,11 @@ function ChartsView() {
     searchCount: 0,
     avgForecast: 0
   });
+  const [visible, setVisible] = useState(savedState?.visible || {
+    temperature: true,
+    humidity: true,
+    wind: true
+  });
   const screenWidth = useScreenWidth();
 
   // Save state to sessionStorage whenever it changes
@@ -47,11 +52,12 @@ function ChartsView() {
         nearbyLocations,
         units,
         searchRadius,
-        summary
+        summary,
+        visible
       };
       saveStateToStorage('chartsViewState', stateToSave);
     }
-  }, [locations, searchHistory, nearbyLocations, units, searchRadius, summary]);
+  }, [locations, searchHistory, nearbyLocations, units, searchRadius, summary, visible]);
 
   const detectLocation = async () => {
     setIsLoading(true);
@@ -216,6 +222,10 @@ function ChartsView() {
     setUnits(prev => ({ ...prev, ...u }));
   }, []);
 
+  const toggleVisible = (key) => {
+    setVisible(prev => ({ ...prev, [key]: !prev[key] }));
+  };
+
   return (
     <>
       <div className="left-panel">
@@ -248,8 +258,17 @@ function ChartsView() {
         
         <Summary data={summary} onUnitChange={handleUnitChange} location={locations[0]?.name} />
         
+        <div className="visibility-controls">
+          <div className="controls-row">
+            <span className="controls-title">Chart Filter:</span>
+            <label><input type="checkbox" checked={visible.temperature} onChange={() => toggleVisible('temperature')} /> Temperature</label>
+            <label><input type="checkbox" checked={visible.humidity} onChange={() => toggleVisible('humidity')} /> Humidity</label>
+            <label><input type="checkbox" checked={visible.wind} onChange={() => toggleVisible('wind')} /> Wind & Rain</label>
+          </div>
+        </div>
+        
         {/* Data Visualization Charts */}
-        <WeatherCharts locations={locations} units={units} />
+        <WeatherCharts locations={locations} units={units} visible={visible} />
       </div>
 
       <div className="right-panel">
