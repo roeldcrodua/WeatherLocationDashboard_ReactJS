@@ -99,12 +99,13 @@ export const getWeatherIcon = (conditionCode, isDay, conditionsMapping = null) =
   const iconNumber = (conditionsMapping && conditionsMapping[conditionCode]) || 113; // Default to sunny/clear
   const timeOfDay = isDay === 1 ? 'd' : 'n';
   
-  // Return path to local assets/icon folder
+  // Use relative path that works in both dev and production
+  // Vite will handle the asset paths during build
   try {
-    return `/src/assets/icon/${iconNumber}${timeOfDay}@2x.png`;
+    return new URL(`./assets/icon/${iconNumber}${timeOfDay}@2x.png`, import.meta.url).href;
   } catch (error) {
     console.warn(`Icon not found for code ${conditionCode}, using default`);
-    return `/src/assets/icon/113${timeOfDay}.png`;
+    return new URL(`./assets/icon/113${timeOfDay}.png`, import.meta.url).href;
   }
 };
 
