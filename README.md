@@ -71,7 +71,7 @@ The following **optional** features are implemented:
 ### Additional Features
 The following **additional** features are implemented:
 
-* [ ] Deploy through github pages
+* [x] Deploy through github pages: https://roeldcrodua.github.io/WeatherLocationDashboard_ReactJS/
 
 ## Video Walkthrough
 
@@ -80,6 +80,8 @@ Here's a walkthrough of implemented user stories:
 ### PART 1
 <img src='https://github.com/roeldcrodua/WeatherLocationDashboard_ReactJS/blob/main/src/assets/demo.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
+### PART 2
+<img src='https://github.com/roeldcrodua/WeatherLocationDashboard_ReactJS/blob/main/src/assets/demo2.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 <!-- Replace this with whatever GIF tool you used! -->
 GIF created with Wondershare Uniconverter 14 Tool - GIF Maker 
 <!-- Recommended tools:
