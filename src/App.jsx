@@ -7,7 +7,7 @@ import Astronomy from './components/Astronomy';
 import Marine from './components/Marine';
 import Nearby from './components/Nearby';
 import Summary from './components/Summary';
-import SearchHistory from "./components/Searchhistory";
+import SearchHistory from "./components/SearchHistory";
 
 const WEATHER_API_KEY = import.meta.env.VITE_WEATHERAPI_KEY;
 const ZIPCODE_API_KEY = import.meta.env.VITE_ZIPCODESTACK_KEY;
@@ -15,35 +15,38 @@ const WEATHER_BASE_URL = 'https://api.weatherapi.com/v1';
 const ZIPCODE_BASE_URL = 'https://app.zipcodebase.com/api/v1';
 const IPAPI_BASE_URL = 'https://ipapi.co';
 
-// Unit conversion helpers (copied from src/utils/units.js)
+// Internal temperature conversion utilities
 const cToF = (c) => (c * 9) / 5 + 32;
-const fToC = (f) => ((f - 32) * 5) / 9;
 
-const kmToMi = (km) => km / 1.60934;
-const miToKm = (mi) => mi * 1.60934;
-
+// Internal speed conversion utilities
 const kphToMph = (kph) => kph / 1.60934;
-const mphToKph = (mph) => mph * 1.60934;
 
-const mmToInches = (mm) => mm / 25.4;
-const inchesToMm = (inches) => inches * 25.4;
+// Distance/Precipitation conversion utilities
+export const mmToInches = (mm) => mm / 25.4;
 
-const formatTemp = (valueC, unit = 'C') => {
-  const v = Number(valueC) || 0;
-  if (unit === 'F') return `${Math.round(cToF(v))}°F`;
-  return `${Math.round(v)}°C`;
+// Format temperature based on unit preference
+export const formatTemp = (valueC, unit = 'C') => {
+  const val = Number(valueC) || 0;
+  if (unit === 'F') {
+    return `${Math.round(cToF(val))}°F`;
+  }
+  return `${Math.round(val)}°C`;
 };
 
-const formatSpeed = (kph, units) => {
-  const v = Number(kph) || 0;
-  if (units?.distance === 'mi') return `${kphToMph(v).toFixed(1)} mph`;
-  return `${v.toFixed(1)} km/h`;
+// Format speed based on unit preference
+export const formatSpeed = (kph, units) => {
+  if (units?.distance === 'mi') {
+    return `${kphToMph(kph).toFixed(1)} mph`;
+  }
+  return `${kph.toFixed(1)} km/h`;
 };
 
-const formatDistance = (value, units) => {
-  const v = Number(value) || 0;
-  if (units?.distance === 'km') return `${(Number(v)).toFixed(1)} km`;
-  return `${(Number(v)).toFixed(1)} mi`;
+// Format distance based on unit preference
+export const formatDistance = (value, units) => {
+  if (units?.distance === 'mi') {
+    return `${value.toFixed(1)} mi`;
+  }
+  return `${(value * 1.60934).toFixed(1)} km`;
 };
 
 // Cache for weather conditions to avoid repeated API calls
@@ -53,7 +56,7 @@ let weatherConditionsCache = null;
  * Fetch weather condition codes to icon mapping from WeatherAPI
  * @returns {Promise<Object>} Mapping of condition codes to icon numbers
  */
-const fetchWeatherConditions = async () => {
+export const fetchWeatherConditions = async () => {
   // Return cached data if available
   if (weatherConditionsCache) {
     return weatherConditionsCache;
@@ -99,7 +102,7 @@ const fetchWeatherConditions = async () => {
  * @param {Object} conditionsMapping - The weather conditions mapping (optional, will fetch if not provided)
  * @returns {string} The path to the local icon image
  */
-const getWeatherIcon = (conditionCode, isDay, conditionsMapping = null) => {
+export const getWeatherIcon = (conditionCode, isDay, conditionsMapping = null) => {
   const iconNumber = (conditionsMapping && conditionsMapping[conditionCode]) || 113; // Default to sunny/clear
   const timeOfDay = isDay === 1 ? 'd' : 'n';
   
