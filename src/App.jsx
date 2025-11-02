@@ -9,11 +9,12 @@ import Nearby from './components/Nearby';
 import Summary from './components/Summary';
 import SearchHistory from "./components/SearchHistory";
 
-const WEATHER_API_KEY = import.meta.env.VITE_WEATHERAPI_KEY;
-const ZIPCODE_API_KEY = import.meta.env.VITE_ZIPCODESTACK_KEY;
-const WEATHER_BASE_URL = 'https://api.weatherapi.com/v1';
-const ZIPCODE_BASE_URL = 'https://app.zipcodebase.com/api/v1';
-const IPAPI_BASE_URL = 'https://ipapi.co';
+// API Configuration Constants (exported for use in route components)
+export const WEATHER_API_KEY = import.meta.env.VITE_WEATHERAPI_KEY;
+export const ZIPCODE_API_KEY = import.meta.env.VITE_ZIPCODESTACK_KEY;
+export const WEATHER_BASE_URL = 'https://api.weatherapi.com/v1';
+export const ZIPCODE_BASE_URL = 'https://app.zipcodebase.com/api/v1';
+export const IPAPI_BASE_URL = 'https://ipapi.co';
 
 // Internal temperature conversion utilities
 const cToF = (c) => (c * 9) / 5 + 32;
@@ -113,6 +114,50 @@ export const getWeatherIcon = (conditionCode, isDay, conditionsMapping = null) =
     console.warn(`Icon not found for code ${conditionCode}, using default`);
     return `/src/assets/icon/113${timeOfDay}.png`;
   }
+};
+
+/**
+ * Utility function to load state from sessionStorage
+ * @param {string} key - The sessionStorage key to load from
+ * @returns {Object|null} The parsed state object or null if not found/error
+ */
+export const loadStateFromStorage = (key) => {
+  try {
+    const saved = sessionStorage.getItem(key);
+    return saved ? JSON.parse(saved) : null;
+  } catch (e) {
+    console.error(`Error loading state from ${key}:`, e);
+    return null;
+  }
+};
+
+/**
+ * Utility function to save state to sessionStorage
+ * @param {string} key - The sessionStorage key to save to
+ * @param {Object} state - The state object to save
+ */
+export const saveStateToStorage = (key, state) => {
+  try {
+    sessionStorage.setItem(key, JSON.stringify(state));
+  } catch (e) {
+    console.error(`Error saving state to ${key}:`, e);
+  }
+};
+
+/**
+ * Custom hook for screen width detection
+ * @returns {number} Current screen width
+ */
+export const useScreenWidth = () => {
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  
+  useEffect(() => {
+    const handleResize = () => setScreenWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  
+  return screenWidth;
 };
 
 function App() {
