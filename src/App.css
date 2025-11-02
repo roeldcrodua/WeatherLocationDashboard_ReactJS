@@ -1074,3 +1074,520 @@ body::-webkit-scrollbar-thumb:hover, #root::-webkit-scrollbar-thumb:hover, .app-
     font-size: 2.5rem;
   }
 }
+
+/* Summary Filters */
+.summary-filters {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.summary-filters label {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-right: 0.25rem;
+}
+
+.summary-filters select {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.3);
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.summary-filters select:hover {
+  background: rgba(0, 0, 0, 0.4);
+  border-color: var(--accent-color);
+}
+
+.summary-filters select:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(255, 140, 0, 0.2);
+}
+
+/* Summary Header */
+.summary > div:first-child {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.summary h2 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 1.5rem;
+}
+
+/* Text Utility Classes */
+.text-muted {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.text-primary {
+  color: var(--text-primary);
+}
+
+/* Weather Card - General container for charts and other cards */
+.weather-card {
+  background: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: 16px;
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 10px var(--shadow-color);
+  transition: all 0.3s ease;
+  margin-bottom: 1.5rem;
+}
+
+.weather-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px var(--shadow-color);
+}
+
+.weather-card h2 {
+  margin: 0 0 1rem 0;
+  color: var(--text-primary);
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.weather-card h2 i {
+  color: var(--accent-color);
+}
+
+/* Search History */
+.search-history {
+  width: 100%;
+}
+
+.search-history h2 {
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+/* Nearby */
+.nearby {
+  width: 100%;
+}
+
+.nearby h2 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 1.3rem;
+}
+
+/* Location Stats (for location cards) */
+.location-stats {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.location-stats span {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.location-stats i {
+  color: var(--accent-color);
+}
+
+/* Unit Toggle Buttons (if needed) */
+.unit-toggle {
+  display: inline-flex;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  padding: 0.25rem;
+  gap: 0.25rem;
+}
+
+.unit-toggle button {
+  padding: 0.5rem 1rem;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  border-radius: 16px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.unit-toggle button.active {
+  background: var(--accent-color);
+  color: #112;
+  font-weight: 600;
+}
+
+.unit-toggle button:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+}
+
+/* Location Name in Current component */
+.location-name {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.updated {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+/* Analytics Button or Links */
+.analytics-button,
+.view-charts-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(90deg, var(--accent-color), var(--hover-color));
+  color: #112;
+  text-decoration: none;
+  border-radius: 50px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(255,140,0,0.3);
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.analytics-button:hover,
+.view-charts-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255,140,0,0.4);
+}
+
+.analytics-button i,
+.view-charts-button i {
+  font-size: 1.1rem;
+}
+
+/* Recharts Customization */
+.recharts-wrapper {
+  margin: 0 auto;
+}
+
+.recharts-cartesian-axis-tick-value {
+  fill: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+.recharts-legend-wrapper {
+  padding-top: 1rem;
+}
+
+.recharts-legend-item-text {
+  color: var(--text-primary) !important;
+}
+
+/* Loading Spinner Animation */
+.fa-spinner.fa-spin {
+  animation: fa-spin 1s infinite linear;
+}
+
+@keyframes fa-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Layout Header Link */
+.app-header h1 a {
+  color: inherit;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.app-header h1 a:hover {
+  opacity: 0.9;
+}
+
+/* Analytics Charts Button (blue-green gradient variant) */
+.analytics-charts-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(90deg, #0088FE, #00C49F);
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 50px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 136, 254, 0.3);
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.analytics-charts-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 136, 254, 0.4);
+}
+
+.analytics-charts-button i {
+  font-size: 1.1rem;
+}
+
+/* Summary Header Container */
+.summary-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.summary-header h2 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 1.5rem;
+}
+
+/* Recharts Tooltip Styling */
+.recharts-tooltip-wrapper {
+  outline: none;
+}
+
+.recharts-default-tooltip {
+  background: rgba(0, 0, 0, 0.9) !important;
+  border: 1px solid var(--card-border) !important;
+  border-radius: 8px !important;
+  padding: 0.75rem !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5) !important;
+}
+
+.recharts-tooltip-label {
+  color: var(--text-primary) !important;
+  font-weight: 600 !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.recharts-tooltip-item {
+  color: var(--text-secondary) !important;
+}
+
+.recharts-tooltip-item-value {
+  color: var(--text-primary) !important;
+  font-weight: 600 !important;
+}
+
+/* Responsive Summary Header */
+@media (max-width: 600px) {
+  .summary-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .summary-filters {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+}
+
+/* Dashboard Location Cards */
+.location-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.location-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  transition: transform 0.2s ease;
+}
+
+.location-card-link:hover {
+  transform: translateY(-5px);
+}
+
+.location-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.location-card:hover {
+  background: linear-gradient(90deg, rgba(255,140,0,0.1), rgba(255,204,51,0.08));
+  box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+  border-color: var(--accent-color);
+}
+
+.location-card-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.location-card-header img {
+  width: 64px;
+  height: 64px;
+}
+
+.location-info h3 {
+  margin: 0;
+  font-size: 1.3rem;
+  color: var(--text-primary);
+}
+
+.location-info .text-muted {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.location-card-body {
+  flex: 1;
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.temp-display {
+  font-size: 3rem;
+  font-weight: bold;
+  color: var(--accent-color);
+  margin-bottom: 0.5rem;
+}
+
+.condition {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+.location-stats {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.location-stats span {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.location-card-footer {
+  text-align: center;
+  padding-top: 1rem;
+  border-top: 1px solid var(--card-border);
+}
+
+.view-details {
+  color: var(--accent-color);
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.location-card:hover .view-details {
+  transform: translateX(5px);
+  display: inline-block;
+}
+
+/* Charts Container */
+.charts-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.chart-card {
+  min-height: 400px;
+}
+
+.chart-description {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+  font-style: italic;
+}
+
+/* Detail View Specific */
+.detail-header {
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: 16px;
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(10px);
+  margin-bottom: 1.5rem;
+}
+
+.detail-header h2 {
+  margin: 1rem 0 0.5rem;
+  color: var(--text-primary);
+  font-size: 2rem;
+}
+
+.location-coordinates {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin: 0.5rem 0 0;
+}
+
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(90deg, var(--accent-color), var(--hover-color));
+  color: #112;
+  text-decoration: none;
+  border-radius: 50px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(255,140,0,0.3);
+}
+
+.back-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255,140,0,0.4);
+}
+
+.back-button i {
+  font-size: 1rem;
+}
+
+/* Responsive Adjustments for Charts */
+@media (max-width: 768px) {
+  .location-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .charts-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .chart-card {
+    min-height: 350px;
+  }
+}
