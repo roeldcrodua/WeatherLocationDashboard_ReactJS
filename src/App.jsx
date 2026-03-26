@@ -103,7 +103,7 @@ export const getWeatherIcon = (conditionCode, isDay, conditionsMapping = null) =
   // Vite will handle the asset paths during build
   try {
     return new URL(`./assets/icon/${iconNumber}${timeOfDay}@2x.png`, import.meta.url).href;
-  } catch (error) {
+  } catch {
     console.warn(`Icon not found for code ${conditionCode}, using default`);
     return new URL(`./assets/icon/113${timeOfDay}.png`, import.meta.url).href;
   }

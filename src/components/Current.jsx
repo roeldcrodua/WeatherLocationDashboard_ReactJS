@@ -27,7 +27,7 @@ function Current({ data, units, formatTemp, formatSpeed, formatDistance, getWeat
       hours = hours ? hours : 12; // 0 should be 12
       
       return `${hours}${ampm} ${month}/${day}/${year}`;
-    } catch (error) {
+    } catch {
       return dateTimeString; // Fallback to original if parsing fails
     }
   };

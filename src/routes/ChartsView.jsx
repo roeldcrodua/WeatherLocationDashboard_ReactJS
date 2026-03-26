@@ -6,7 +6,6 @@ import SearchHistory from '../components/SearchHistory';
 import Nearby from '../components/Nearby';
 import WeatherCharts from '../components/WeatherCharts';
 import { 
-  formatTemp, 
   formatDistance,
   WEATHER_API_KEY,
   ZIPCODE_API_KEY,
@@ -98,7 +97,7 @@ function ChartsView() {
           console.warn('Geolocation permission denied or failed:', geoError);
           try {
             await handleSearch('New York', true);
-          } catch (err) {
+          } catch {
             setError('Could not load weather data. Please search for a location.');
           } finally {
             setIsLoading(false);
@@ -109,7 +108,7 @@ function ChartsView() {
     } else {
       try {
         await handleSearch('New York', true);
-      } catch (err) {
+      } catch {
         setError('Could not load weather data. Please search for a location.');
       } finally {
         setIsLoading(false);
