@@ -28,7 +28,7 @@ function DetailView() {
   const [searchHistory, setSearchHistory] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [units, setUnits] = useState({ temp: 'F', distance: 'mi' });
+  const units = { temp: 'F', distance: 'mi' };
   const [weatherConditionsMapping, setWeatherConditionsMapping] = useState(null);
   const screenWidth = useScreenWidth();
   const [visible, setVisible] = useState({
@@ -49,10 +49,6 @@ function DetailView() {
       setWeatherConditionsMapping(mapping);
     };
     loadWeatherConditions();
-  }, []);
-
-  const handleUnitChange = useCallback((u) => {
-    setUnits(prev => ({ ...prev, ...u }));
   }, []);
 
   const getIconPath = useCallback((conditionCode, isDay) => {

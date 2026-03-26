@@ -131,7 +131,7 @@ function Dashboard() {
           console.warn('Geolocation permission denied or failed:', geoError);
           try {
             await fetchWeatherForLocation('New York');
-          } catch (err) {
+          } catch {
             setError('Could not load weather data. Please search for a location.');
           } finally {
             setIsLoading(false);
@@ -142,7 +142,7 @@ function Dashboard() {
     } else {
       try {
         await fetchWeatherForLocation('New York');
-      } catch (err) {
+      } catch {
         setError('Could not load weather data. Please search for a location.');
       } finally {
         setIsLoading(false);
